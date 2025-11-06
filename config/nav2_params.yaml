@@ -30,12 +30,12 @@ amcl:
     sigma_hit: 0.2
     tf_broadcast: true
     transform_tolerance: 1.0
-    update_min_a: 0.2
-    update_min_d: 0.25
+    update_min_a: 0.05
+    update_min_d: 0.05
     z_hit: 0.5
     z_max: 0.05
     z_rand: 0.5
-    z_short: 0.005
+    z_short: 0.05
     alsways_reset_initial_pose: true
     bond_heartbeat_period: 0.1
     allow_parameter_qos_overrides: true
@@ -45,7 +45,7 @@ bt_navigator:
   ros__parameters:
     global_frame: map
     robot_base_frame: base_link
-    odom_topic: /Odometry
+    odom_topic: odom
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -192,7 +192,7 @@ local_costmap:
       update_frequency: 6.0
       publish_frequency: 4.0
       global_frame: odom
-      robot_base_frame: livox_frame
+      robot_base_frame: base_link
       rolling_window: true
       width: 4
       height: 4
@@ -255,7 +255,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.25
+        inflation_radius: 0.23
       always_send_full_costmap: True
 
 # The yaml_filename does not need to be specified since it going to be set by defaults in launch.
@@ -339,7 +339,7 @@ velocity_smoother:
     min_velocity: [-0.5, 0.0, -2.0]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
-    odom_topic: "/Odometry"
+    odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
@@ -421,10 +421,10 @@ docking_server:
       v_linear_min: 0.15
       v_linear_max: 0.15
 
-# loopback_simulator:
-#   ros__parameters:
-#     base_frame_id: "base_link"
-#     odom_frame_id: "odom"
-#     map_frame_id: "map"
-#     scan_frame_id: "base_scan"  # tb4_loopback_simulator.launch.py remaps to 'rplidar_link'
-#     update_duration: 0.02
+loopback_simulator:
+  ros__parameters:
+    base_frame_id: "base_link"
+    odom_frame_id: "odom"
+    map_frame_id: "map"
+    scan_frame_id: "base_scan"  # tb4_loopback_simulator.launch.py remaps to 'rplidar_link'
+    update_duration: 0.02
